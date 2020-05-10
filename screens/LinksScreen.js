@@ -3,10 +3,15 @@ import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import { useColorScheme } from 'react-native-appearance';
 
 export default function LinksScreen() {
+
+  const colorScheme = useColorScheme();
+ const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
+
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+    <ScrollView style={[styles.container, themeContainerStyle]} contentContainerStyle={styles.contentContainer}>
       <OptionButton
         icon="md-school"
         label="Read the Expo documentation"
@@ -30,14 +35,19 @@ export default function LinksScreen() {
 }
 
 function OptionButton({ icon, label, onPress, isLastOption }) {
+
+  const colorScheme = useColorScheme();
+  const listStyle = colorScheme === 'light' ? styles.listLightColor : styles.listDarkColor;
+  const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
+
   return (
-    <RectButton style={[styles.option, isLastOption && styles.lastOption]} onPress={onPress}>
+    <RectButton style={[styles.option, isLastOption && styles.lastOption, listStyle]} onPress={onPress}>
       <View style={{ flexDirection: 'row' }}>
         <View style={styles.optionIconContainer}>
-          <Ionicons name={icon} size={22} color="rgba(0,0,0,0.35)" />
+          <Ionicons name={icon} size={22}/>
         </View>
         <View style={styles.optionTextContainer}>
-          <Text style={styles.optionText}>{label}</Text>
+          <Text style={[styles.optionText, themeTextStyle]}>{label}</Text>
         </View>
       </View>
     </RectButton>
@@ -47,7 +57,6 @@ function OptionButton({ icon, label, onPress, isLastOption }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
   },
   contentContainer: {
     paddingTop: 15,
@@ -56,10 +65,11 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   option: {
-    backgroundColor: '#fdfdfd',
+    // backgroundColor: '#fdfdfd',
     paddingHorizontal: 15,
     paddingVertical: 15,
     borderWidth: StyleSheet.hairlineWidth,
+    borderWidth: 1,
     borderBottomWidth: 0,
     borderColor: '#ededed',
   },
@@ -70,5 +80,23 @@ const styles = StyleSheet.create({
     fontSize: 15,
     alignSelf: 'flex-start',
     marginTop: 1,
+  },
+  listLightColor: {
+    backgroundColor: '#fdfdfd'
+  },
+  listDarkColor: {
+    backgroundColor: '#8e8e93'
+  },
+  lightContainer: {
+    backgroundColor: '#fdfdfd',
+  },
+  darkContainer: {
+    backgroundColor: '#242C40',
+  },
+  lightThemeText: {
+    color: '#000000',
+  },
+  darkThemeText: {
+    color: '#ffffff',
   },
 });

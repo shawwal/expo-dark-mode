@@ -2,12 +2,18 @@ import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useColorScheme } from 'react-native-appearance';
 
 import { MonoText } from '../components/StyledText';
 
 export default function HomeScreen() {
+  
+  const colorScheme = useColorScheme();
+  const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
+  const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, themeContainerStyle]}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.welcomeContainer}>
           <Image
@@ -23,7 +29,7 @@ export default function HomeScreen() {
         <View style={styles.getStartedContainer}>
           <DevelopmentModeNotice />
 
-          <Text style={styles.getStartedText}>Open up the code for this screen:</Text>
+          <Text style={[styles.getStartedText, themeTextStyle]}>Open up the code for this screen:</Text>
 
           <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
             <MonoText>screens/HomeScreen.js</MonoText>
@@ -36,12 +42,12 @@ export default function HomeScreen() {
 
         <View style={styles.helpContainer}>
           <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-            <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
+            <Text style={[styles.helpLinkText, themeTextStyle]}>Help, it didn’t automatically reload!</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
 
-      <View style={styles.tabBarInfoContainer}>
+      <View style={[styles.tabBarInfoContainer, themeContainerStyle]}>
         <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
 
         <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
@@ -92,17 +98,17 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#FFF',
   },
   developmentModeText: {
     marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
     fontSize: 14,
     lineHeight: 19,
     textAlign: 'center',
   },
   contentContainer: {
     paddingTop: 30,
+    // backgroundColor: '#FFF',
   },
   welcomeContainer: {
     alignItems: 'center',
@@ -154,7 +160,6 @@ const styles = StyleSheet.create({
       },
     }),
     alignItems: 'center',
-    backgroundColor: '#fbfbfb',
     paddingVertical: 20,
   },
   tabBarInfoText: {
@@ -175,5 +180,17 @@ const styles = StyleSheet.create({
   helpLinkText: {
     fontSize: 14,
     color: '#2e78b7',
+  },
+  lightContainer: {
+    backgroundColor: '#FFFFFF',
+  },
+  darkContainer: {
+    backgroundColor: '#242C40',
+  },
+  lightThemeText: {
+    color: '#242C40',
+  },
+  darkThemeText: {
+    color: '#D0D0C0',
   },
 });

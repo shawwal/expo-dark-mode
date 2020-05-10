@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "light-and-dark-mode",
-    "slug": "light-and-dark-mode",
+    "name": "expo-tabs-auto-light-and-dark-mode",
+    "slug": "expo-tabs-auto-light-and-dark-mode",
     "platforms": [
       "ios",
       "android",
@@ -22,6 +22,7 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true
     },
